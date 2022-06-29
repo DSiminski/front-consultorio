@@ -21,7 +21,7 @@
         <tbody>
             <tr>
                 <td></td>
-                <td><router-link to="/detalheEspecialidade"><button class="button is-size-6">Detalhar</button></router-link></td>
+                <td><router-link to="/especialidadeDetalhe"><button class="button is-size-6">Detalhar</button></router-link></td>
             </tr>
         </tbody>
       </table>

@@ -6,7 +6,7 @@
         <input class="input" type="text" placeholder="Pesquisar">
       </div>
       <div class="column is-3">
-        <button class="button">Cadastrar</button>
+      <button class="button">Cadastrar</button>
       </div>
     </div>
     <div class="column is-11">

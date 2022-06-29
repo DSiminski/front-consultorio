@@ -6,7 +6,7 @@
         <input class="input" type="text" placeholder="Pesquisar">
       </div>
       <div class="column is-3">
-        <button class="button">Cadastrar</button>
+       <button class="button">Cadastrar</button>
       </div>
     </div>
     <div class="column is-11">
@@ -41,5 +41,5 @@
 <script lang="ts">
   import { Vue } from 'vue-class-component'; 
 
-  export default class AgendaView extends Vue {}
+  export default class AgendamentoView extends Vue {}
 </script>

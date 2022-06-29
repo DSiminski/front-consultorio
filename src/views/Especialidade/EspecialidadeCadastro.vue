@@ -14,7 +14,7 @@
         <div class="column is-10 is-flex is-justify-content-space-between p-5">
             <div class="field">
                 <div class="control">
-                    <router-link to="/especialidades">
+                    <router-link to="/especialidadeView">
                         <input class="button has-background-primary has-text-white is-uppercase btn" value="Voltar">
                     </router-link>
                 </div>

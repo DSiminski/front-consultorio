@@ -23,7 +23,7 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td><router-link to="/detalheConvenio"><button class="button is-size-6">Detalhar</button></router-link></td>
+                <td><router-link to="/convenioDetalhes"><button class="button is-size-6">Detalhar</button></router-link></td>
             </tr>
         </tbody>
       </table>

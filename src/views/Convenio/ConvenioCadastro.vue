@@ -1,37 +1,52 @@
 <template>
-  <div>
-    <h3 class="title is-5 has-text-left">Lista de Especialidades</h3>
-    <div class="columns">
-      <div class="column is-6">
-        <input class="input" type="text" placeholder="Pesquisar">
-      </div>
-      <div class="column is-3">
-        <router-link to="/especialidadeCadastro"><button class="button">Cadastrar</button></router-link>
-      </div>
-    </div>
-   
-    <div class="column is-9">
-      <table class="table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Opções</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>
-                <td><router-link to="/detalheEspecialidade"><button class="button is-size-6">Detalhar</button></router-link></td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
- 
-  </div>
+    <h1 class="title is-4 has-text-left">Cadastrar Convênios</h1>
+    <form>
+        <div class="columns p-5">
+            <div class="column is-5">
+                <div class="field">
+                    <label class="label has-text-left">Nome</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Insira um nome">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label has-text-left">Valor</label>
+                    <div class="control">
+                        <input class="input" type="number" placeholder="Insira um valor">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-10 is-flex is-justify-content-space-between p-5">
+            <div class="field">
+                <div class="control">
+                    <router-link to="/convenioView">
+                        <input class="button has-background-primary has-text-white is-uppercase btn" value="Voltar">
+                    </router-link>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input class="button has-background-primary has-text-white is-uppercase btn" type="submit" value="Cadastrar">
+                </div>
+            </div>
+        </div>
+    </form>
 </template>
 
 <script lang="ts">
-  import { Vue } from 'vue-class-component'; 
+    import { Options,Vue } from 'vue-class-component'; 
 
-  export default class EspecialidadeView extends Vue {}
+    @Options({
+        
+    })
+    export default class ConvenioCadastro extends Vue {
+
+    }
 </script>
+
+<style>
+    .btn {
+        width: 15rem;
+    }
+</style>
