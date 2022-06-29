@@ -121,7 +121,7 @@
         
     })
     export default class MedicoCadastro extends Vue {
-git add
+
     }
 </script>
 

@@ -41,7 +41,7 @@
     @Options({
         
     })
-    export default class EspecialidadeDetalhe extends Vue {
+    export default class EspecialidadeDetalhes extends Vue {
 
     }
 </script>

@@ -8,12 +8,15 @@ import ConvenioCadastro from '../views/Convenio/ConvenioCadastro.vue'
 import ConvenioDetalhes from '../views/Convenio/ConvenioDetalhes.vue'
 import ConvenioView from '../views/Convenio/ConvenioView.vue'
 import EspecialidadeCadastro from '../views/Especialidade/EspecialidadeCadastro.vue'
-import EspecialidadeDetalhe from '../views/Especialidade/EspecialidadeDetalhe.vue'
+import EspecialidadeDetalhes from '../views/Especialidade/EspecialidadeDetalhes.vue'
 import EspecialidadeView from '../views/Especialidade/EspecialidadeView.vue'
 import HistoricoView from '../views/Historico/HistoricoView.vue'
 import MedicoView from '../views/Medico/MedicoView.vue'
-import MedicoCadastro from '../views/Medico/MedicoCadastro.vue'
 import MedicoDetalhes from '../views/Medico/MedicoDetalhes.vue'
+import MedicoCadastro from '../views/Medico/MedicoCadastro.vue'
+import PacienteCadastro from '../views/Paciente/PacienteCadastro.vue'
+import PacienteDetalhes from '../views/Paciente/PacienteDetalhes.vue'
+import PacienteView from '../views/Paciente/PacienteView.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -62,8 +65,8 @@ const routes: Array<RouteRecordRaw> = [
 },
 {
   path: '/especialidadeDetalhe',
-  name: 'EspecialidadeDetalhe',
-  component: EspecialidadeDetalhe,
+  name: 'EspecialidadeDetalhes',
+  component: EspecialidadeDetalhes,
 },
 {
   path: '/especialidadeView',
@@ -89,6 +92,21 @@ const routes: Array<RouteRecordRaw> = [
   path: '/medicoDetalhes',
   name: 'MedicoDetalhes',
   component: MedicoDetalhes,
+},
+{
+  path: '/pacienteDetalhes',
+  name: 'PacienteDetalhes',
+  component: PacienteDetalhes,
+},
+{
+  path: '/pacienteCadastro',
+  name: 'PacienteCadastro',
+  component: PacienteCadastro,
+},
+{
+  path: '/pacienteView',
+  name: 'PacienteView',
+  component: PacienteView,
 },
 
 ]

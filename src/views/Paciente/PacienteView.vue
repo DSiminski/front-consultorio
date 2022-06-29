@@ -28,7 +28,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><router-link to="/detalhePaciente"><button class="button is-size-6">Detalhar</button></router-link></td>
+                <td><router-link to="/pacienteDetalhes"><button class="button is-size-6">Detalhar</button></router-link></td>
             </tr>
         </tbody>
       </table>
