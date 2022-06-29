@@ -1,10 +1,9 @@
 <template>
 <div class="container">
-  <div class = "SideBar is-full">
-    <h2> SideBar</h2>
-  </div>
+  <h1>
+    Bem-Vindo
+  </h1>
 </div>
-
 </template>
 
 <script lang="ts">
@@ -16,13 +15,8 @@
 .container {
   background-color: pink;
   width: 100%;
-  height: 50%;
+  height: 100%;
   
 
 }
-
-
-
-
-
 </style>

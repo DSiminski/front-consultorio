@@ -2,7 +2,7 @@
 <template>
   <div class="content">
     <div class="column is-fullhd header">
-      <h1>Header</h1>
+      <h1>Consultório</h1>
     </div>
 
     <div class="columns mt-3">
@@ -19,7 +19,8 @@
               <p class="menu-label has-text-left pl-5"> Úsuario </p>
                <ul class="menu-list">
                   <li><a>Médicos</a></li>
-                  <li><a>Secretárias</a></li>
+                  <li><router-link to="/secretariaView">Secretárias</router-link></li>
+                
                   <li><a>Paciente</a></li>
                 </ul>
               <p class="menu-label has-text-left pl-5"> Agenda </p>
@@ -43,6 +44,11 @@
 
 </template>
 
+<script lang="ts">
+  import { Vue } from 'vue-class-component'; 
+
+  export default class App extends Vue {}
+</script>
 
 <style lang="scss">
 @import "~bulma/bulma.sass";
@@ -67,7 +73,7 @@
 .header {
   background-color: aqua;
   max-height: 80px;
-  text-align: center;
+  text-align: left;
 
   h1 {
     color: black;
