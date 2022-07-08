@@ -5,6 +5,9 @@ import { PageResponse } from "@/model/page.response";
 import axios, { AxiosInstance } from "axios";
 
 export class ConvenioClient {
+findByFiltrosPaginado(pageRequest: PageRequest) {
+throw new Error('Method not implemented.');
+}
   private axiosClient: AxiosInstance;
 
   constructor() {
@@ -22,7 +25,7 @@ public async getConveniosById(id: number): Promise<Convenio> {
     }
   }
 
-  public async getAgendas(
+  public async getConvenios(
     pageRequest: PageRequest
   ): Promise<PageResponse<Convenio>> {
     try {
@@ -44,7 +47,7 @@ public async getConveniosById(id: number): Promise<Convenio> {
     }
   }
 
-  public async postAgenda(convenio: Convenio): Promise<void> {
+  public async postConvenio(convenio: Convenio): Promise<void> {
     try {
       return await this.axiosClient.post("/", convenio);
     } catch (error: any) {

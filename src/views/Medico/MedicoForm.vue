@@ -1,37 +1,45 @@
 <template>
     <h1 class="title is-4 has-text-left">Cadastrar Médicos</h1>
-    <form>
+        <div class="columns" v-if="notification.ativo">
+        <div class="column is-12">
+            <div :class="notification.classe">
+                <button @click="onClickFecharNotificacao()" class="delete" ></button>
+                {{ notification.message }}
+            </div>
+            </div>
+        </div>
+      <form>
         <div class="columns p-5">
             <div class="column is-5">
                 <div class="field">
                     <label class="label has-text-left">Nome</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um nome">
+                        <input class="input" type="text" placeholder="Insira um nome" v-model="medicos.nome">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">Login</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um nome de usuario">
+                        <input class="input" type="text" placeholder="Insira um nome de usuario" v-model="medicos.login">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">RG</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um rg">
+                        <input class="input" type="text" placeholder="Insira um rg" v-model="medicos.rg">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">Telefone</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um telefone">
+                        <input class="input" type="text" placeholder="Insira um telefone" v-model="medicos.telefone">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">Sexo</label>
                     <div class="control is-flex">
-                        <div class="select"> 
-                            <select>
+                        <div class="select"  > 
+                            <select v-model="medicos.sexo">
                                 <option value="">Selecione</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
@@ -43,13 +51,13 @@
                 <div class="field">
                     <label class="label has-text-left">Consultório</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um nome de consultório">
+                        <input class="input" type="text" placeholder="Insira um nome de consultório" v-model="medicos.consultorio">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">CRM</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um CRM">
+                        <input class="input" type="text" placeholder="Insira um CRM" v-model="medicos.crm">
                     </div>
                 </div>
             </div>
@@ -57,32 +65,32 @@
                 <div class="field">
                     <label class="label has-text-left">Email</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="Insira um email">
+                        <input class="input" type="email" placeholder="Insira um email" v-model="medicos.email">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">Senha</label>
                     <div class="control">
-                        <input class="input" type="password" placeholder="Insira uma senha">
+                        <input class="input" type="password" placeholder="Insira uma senha" v-model="medicos.senha">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">CPF</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira um cpf">
+                        <input class="input" type="text" placeholder="Insira um cpf" v-model="medicos.cpf">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">Nacionalidade</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Insira uma nacionalidade">
+                        <input class="input" type="text" placeholder="Insira uma nacionalidade" v-model="medicos.nacionalidade">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label has-text-left">Especialidade</label>
                     <div class="control is-flex">
                         <div class="select"> 
-                            <select>
+                            <select v-model="medicos.especialidade">
                                 <option value="">Selecione</option>
                                 <option value="Cardiologista">Cardiologista</option>
                             </select>
@@ -92,7 +100,7 @@
                 <div class="field">
                     <label class="label has-text-left">Porcentagem De Participação</label>
                     <div class="control">
-                        <input class="input" type="number" placeholder="Insira o valor da %">
+                        <input class="input" type="number" placeholder="Insira o valor da %" v-model="medicos.porcentagem">
                     </div>
                 </div>
             </div>
@@ -107,7 +115,8 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <input class="button has-background-primary has-text-white is-uppercase btn" type="submit" value="Cadastrar">
+                    <input class="button has-background-primary has-text-white is-uppercase btn" type="submit" 
+                        value="Cadastrar" @click="postMedico()">
                 </div>
             </div>
         </div>
@@ -115,14 +124,61 @@
 </template>
 
 <script lang="ts">
-    import { Options,Vue } from 'vue-class-component'; 
 
-    @Options({
-        
-    })
-    export default class MedicoCadastro extends Vue {
+    import { Vue } from 'vue-class-component';
+    import { Medico } from '@/model/medico.model';
+    import { Notification } from '@/model/notification';
+    import { MedicoClient } from '@/client/medico.client';
+    import { Especialidade } from '@/model/especialidade.model';
+    import { EspecialidadeClient } from '@/client/especialidade.client';
+    import { PageRequest } from '@/model/page-request'
+    import { PageResponse } from '@/model/page.response'
 
+export default class MedicoForm extends Vue {
+    pageRequest: PageRequest = new PageRequest()
+    pageResponse: PageResponse<Especialidade> = new PageResponse()
+    medicoClient!: MedicoClient
+    medicos: Medico = new Medico()
+    notification: Notification = new Notification()
+    especialidade: Especialidade = new Especialidade()
+    especialidadeClient!: EspecialidadeClient
+    especialidadeList: Especialidade[] = []
+    
+    public mounted(): void {
+        this.medicoClient = new MedicoClient()
+        this.especialidadeClient = new EspecialidadeClient()
+        this.getEspecialidade()
     }
+    public postMedico(): void {
+        this.medicoClient.postMedico(this.medicos)
+           .then(
+            (success: any)=>{
+                this.notification = this.notification.new(true, 'notification is-success', 'Médico Cadastrado com sucesso!!!')
+               
+            },
+            error => {
+                    console.log(error)
+                    this.notification = this.notification.new(true, 'notification is-danger', 'Erro ao cadastrar Médico')
+                }
+            )
+    }
+    public getEspecialidade(): void {
+        this.especialidadeClient.getEspecialidades(this.pageRequest)
+            .then(
+                success => {
+                    this.pageResponse = success
+                    this.especialidadeList = this.pageResponse.content
+                },
+                error => console.log(error)
+            )
+    }
+    public onClickFecharNotificacao(): void {
+        this.notification = new Notification()
+    }
+    public onClickLimpar(): void {
+        this.medicos = new Medico()
+    }
+}
 </script>
 
 <style>

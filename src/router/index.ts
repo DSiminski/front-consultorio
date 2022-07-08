@@ -1,22 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SecretariaView from '../views/Secretaria/SecretariaView.vue'
-import SecretariaCadastro from '../views/Secretaria/SecretariaCadastro.vue'
-import SecretariaDetalhes from '../views/Secretaria/SecretariaDetalhes.vue'
-//  import AgendamentoView from '../views/Agenda/AgendamentoView'
-import ConvenioCadastro from '../views/Convenio/ConvenioCadastro.vue'
-import ConvenioDetalhes from '../views/Convenio/ConvenioDetalhes.vue'
+import SecretariaForm from '../views/Secretaria/SecretariaForm.vue'
+// import AgendamentoView from '../views/Agenda/AgendamentoView'
+import ConvenioForm from '../views/Convenio/ConvenioForm.vue'
 import ConvenioView from '../views/Convenio/ConvenioView.vue'
-import EspecialidadeCadastro from '../views/Especialidade/EspecialidadeCadastro.vue'
-import EspecialidadeDetalhes from '../views/Especialidade/EspecialidadeDetalhes.vue'
-import EspecialidadeView from '../views/Especialidade/EspecialidadeView.vue'
 import HistoricoView from '../views/Historico/HistoricoView.vue'
 import MedicoView from '../views/Medico/MedicoView.vue'
-import MedicoDetalhes from '../views/Medico/MedicoDetalhes.vue'
-import MedicoCadastro from '../views/Medico/MedicoCadastro.vue'
-import PacienteCadastro from '../views/Paciente/PacienteCadastro.vue'
-import PacienteDetalhes from '../views/Paciente/PacienteDetalhes.vue'
+import MedicoForm from '../views/Medico/MedicoForm.vue'
+import PacienteForm from '../views/Paciente/PacienteForm.vue'
 import PacienteView from '../views/Paciente/PacienteView.vue'
+import EspecialidadeView from '../views/Especialidade/EspecialidadeView.vue'
+import EspecialidadeForm from '../views/Especialidade/EspecialidadeForm.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -29,50 +24,29 @@ const routes: Array<RouteRecordRaw> = [
     component: SecretariaView,
   },
   {
-    path: '/secretariaCadastro',
-    name: 'SecretariaCadastro',
-    component: SecretariaCadastro,
+    path: '/secretariaForm',
+    name: 'SecretariaForm',
+    component: SecretariaForm,
   },
-  {
-    path: '/secretariaDetalhes',
-    name: 'SecretariaDetalhes',
-    component: SecretariaDetalhes,
-  },
+  
+ 
   // {
   //   path: '/agendamentoView',
   //   name: 'AgendamentoView',
   //   component: AgendamentoView,
   // },
 {
-  path: '/convenioCadastro',
-  name: 'ConvenioCadastro',
-  component: ConvenioCadastro,
+  path: '/convenioForm',
+  name: 'ConvenioForm',
+  component: ConvenioForm,
 },
-{
-  path: '/convenioDetalhes',
-  name: 'ConvenioDetalhes',
-  component: ConvenioDetalhes,
-},
+
 {
   path: '/convenioView',
   name: 'ConvenioView',
   component: ConvenioView,
 },
-{
-  path: '/especialidadeCadastro',
-  name: 'EspecialidadeCadastro',
-  component: EspecialidadeCadastro,
-},
-{
-  path: '/especialidadeDetalhe',
-  name: 'EspecialidadeDetalhes',
-  component: EspecialidadeDetalhes,
-},
-{
-  path: '/especialidadeView',
-  name: 'EspecialidadeView',
-  component: EspecialidadeView,
-},
+
 {
   path: '/historicoView',
   name: 'HistoricoView',
@@ -84,29 +58,30 @@ const routes: Array<RouteRecordRaw> = [
   component: MedicoView,
 },
 {
-  path: '/medicoCadastro',
-  name: 'MedicoCadastro',
-  component: MedicoCadastro,
+  path: '/medicoForm',
+  name: 'MedicoForm',
+  component: MedicoForm,
 },
 {
-  path: '/medicoDetalhes',
-  name: 'MedicoDetalhes',
-  component: MedicoDetalhes,
-},
-{
-  path: '/pacienteDetalhes',
-  name: 'PacienteDetalhes',
-  component: PacienteDetalhes,
-},
-{
-  path: '/pacienteCadastro',
-  name: 'PacienteCadastro',
-  component: PacienteCadastro,
+  path: '/pacienteForm',
+  name: 'PacienteForm',
+  component: PacienteForm,
 },
 {
   path: '/pacienteView',
   name: 'PacienteView',
   component: PacienteView,
+},
+{
+  path: '/especialidadeView',
+  name: 'EspecialidadeView',
+  component: EspecialidadeView,
+},
+{
+  path: '/especialidadeForm/:model',
+  name: 'EspecialidadeForm',
+  component: EspecialidadeForm, 
+  props:(router) =>({model:router.params.model})
 },
 
 ]

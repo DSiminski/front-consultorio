@@ -1,7 +1,7 @@
 import { AbstractEntity } from "./abstract-entity.model";
 
 export class Convenio extends AbstractEntity{
-    nome!: String
+    nome!: string
     valor!: number
-    numeroCartaoConvenio!: String
+    numeroCartaoConvenio!: string
 }

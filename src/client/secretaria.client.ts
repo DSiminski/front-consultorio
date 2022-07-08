@@ -9,7 +9,7 @@ export class SecretariaClient {
     
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: "http://localhost:8080/api/especialidades",
+      baseURL: "http://localhost:8080/api/secretarias",
       headers: { "Content-type": "application/json" },
     });
   }
@@ -68,4 +68,17 @@ export class SecretariaClient {
       return Promise.reject(error.response);
     }
   }
+  public async findByFiltrosPaginado(pageRequest: PageRequest): Promise<PageResponse<Secretaria>> {
+    try {
+        let requestPath = ''
+
+        requestPath += `?page=${pageRequest.currentPage}`
+        requestPath += `&size=${pageRequest.pageSize}`
+        requestPath += `&sort=${pageRequest.sortField === undefined ? '' : pageRequest.sortField},${pageRequest.direction}`
+
+        return (await this.axiosClient.get<PageResponse<Secretaria>>(requestPath, { params: { filtros: pageRequest.filter } })).data
+    } catch (error:any) { 
+        return Promise.reject(error.response) 
+    }
+}
 }

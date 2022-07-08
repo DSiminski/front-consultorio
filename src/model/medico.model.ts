@@ -3,7 +3,8 @@ import { Pessoa } from "./pessoa.model";
 
 export class Medico extends Pessoa{
 especialidade!: Especialidade
-crm!: String
+crm!: string
 porcenParticipacao!: number
-consultorio!: String
+consultorio!: string
+valor!: number
 }

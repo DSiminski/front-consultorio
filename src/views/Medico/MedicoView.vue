@@ -6,7 +6,11 @@
         <input class="input" type="text" placeholder="Pesquisar">
       </div>
       <div class="column is-3">
-        <router-link to="/medicoCadastro"><button class="button">Cadastrar</button></router-link>
+        <td>
+          <router-link to="/medicoForm">
+           <input class="button has-background-primary" type="button" value="Cadastrar" @click="onClickPaginaCadastrar()">
+        </router-link>
+        </td>        
       </div>
     </div>
     <div class="column is-11">
@@ -21,12 +25,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><router-link to="/medicoDetalhes"><button class="button">Detalhar</button></router-link></td>
+            <tr v-for="medico in this.medicos" :key="medico.id">            
+              <td>{{medico.nome}}</td>
+              <td>{{medico.crm}}</td>
+              <td>{{medico.especialidade}}</td>
+              <td>{{medico.valor}}</td>
+              <td>{{medico.opcoes}}</td>
+              <td>
+                <input type="button" class="button is-size-6 has-background-grey-light" 
+                  @click="onClickPaginaDetalhar(medico.id)" value="Detalhar">
+              </td>
+               
+
             </tr>
         </tbody>
       </table>
@@ -35,12 +45,32 @@
 </template>
 
 <script lang="ts">
-    import { Options,Vue } from 'vue-class-component'; 
+  import { Vue } from 'vue-class-component';
+  import { PageRequest } from '@/model/page-request';
+  import { PageResponse } from '@/model/page.response';
+  import { Medico } from '@/model/medico.model';
+  import { MedicoClient } from '@/client/medico.client';
 
-    @Options({
-        
-    })
-    export default class MedicoView extends Vue {
+export default class MedicoView extends Vue {
+    pageRequest: PageRequest = new PageRequest();
+    pageResponse: PageResponse<Medico> = new PageResponse();
+    medicos: Medico[] = []
+    medicoClient!: MedicoClient
+  public mounted(): void {
+    this.medicoClient = new MedicoClient();
+    this.getMedicos()
+  }
+  getMedicos(): void {
+    this.medicoClient.getMedicos(this.pageRequest).then((success) => {
+      this.pageResponse = success;
+      this.medicos = this.pageResponse.content
+    }).catch((error) => { console.log(error) })
+  }
 
+    public onClickPaginaDetalhar(idMedico: number){
+      this.$router.push({ name: 'medico-detalhar', params: { id: idMedico, model: 'detalhar' } })
     }
+
+}
+
 </script>

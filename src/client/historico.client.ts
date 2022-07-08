@@ -9,7 +9,7 @@ export class HistoricoClient {
     
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: "http://localhost:8080/api/especialidades",
+      baseURL: "http://localhost:8080/api/historicos",
       headers: { "Content-type": "application/json" },
     });
   }

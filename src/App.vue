@@ -13,20 +13,20 @@
           </p>
               <p class="menu-label has-text-left pl-3"> Administração </p>
                <ul class="menu-list">
-                  <li><a>Convenio</a></li>
-                  <li><a>Especialidade</a></li>
+                  <li><router-link to="/convenioView">Convenio</router-link></li>           
+                  <li><router-link to="/especialidadeView">Especialidade</router-link></li>
                 </ul>
               <p class="menu-label has-text-left pl-5"> Úsuario </p>
                <ul class="menu-list">
-                  <li><a>Médicos</a></li>
+                  <li><router-link to="/medicoView">Médicos</router-link></li>
                   <li><router-link to="/secretariaView">Secretárias</router-link></li>
                 
-                  <li><a>Paciente</a></li>
+                  <li><router-link to="/pacienteView">Paciente</router-link></li>
                 </ul>
               <p class="menu-label has-text-left pl-5"> Agenda </p>
                <ul class="menu-list">
-                  <li><a>Agendamentos</a></li>
-                  <li><a>Histórico</a></li>
+                  <li><router-link to="/agendamentoView">Agendamentos</router-link></li>
+                  <li><router-link to="/historicoView">Histórico</router-link></li>
                 </ul>
         </aside>
       </div>

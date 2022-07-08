@@ -10,5 +10,5 @@ export class Historico extends AbstractEntity{
     secretaria !: Secretaria
     statusAgendamento!: StatusAgendamento
     data!: Date
-    observacao!: String
+    observacao!: string
 }

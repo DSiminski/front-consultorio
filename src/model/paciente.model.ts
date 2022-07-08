@@ -1,10 +1,10 @@
 import { Convenio } from "./convenio.model";
 import { Pessoa } from "./pessoa.model";
-import { TipoAgendamento } from "./tipo-agendamento.model";
+import { TipoAtendimento } from "./tipo-atendimento.model";
 
 export class Paciente extends Pessoa{
     convenio!: Convenio
-    tipoAtendimento!: TipoAgendamento
-    numeroCartaoConvenio!: String
+    tipoAtendimento!: TipoAtendimento
+    numeroCartaoConvenio!: string
     dataVencimento!: Date
 }

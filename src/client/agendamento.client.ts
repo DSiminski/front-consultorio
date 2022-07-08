@@ -8,7 +8,7 @@ export class AgendamentoClient {
   
     constructor() {
       this.axiosClient = axios.create({
-        baseURL: "http://localhost:8080/api/convenios",
+        baseURL: "http://localhost:8080/api/agendamentos",
         headers: { "Content-type": "application/json" },
       });
     }

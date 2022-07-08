@@ -6,7 +6,11 @@
         <input class="input" type="text" placeholder="Pesquisar">
       </div>
       <div class="column is-3">
-        <router-link to="/pacienteCadastro"><button class="button">Cadastrar</button></router-link>
+         <td>
+          
+           <input class="button has-background-primary" type="button" value="Cadastrar" @click="onClickPaginaCadastrar()">
+        
+        </td>
       </div>
     </div>
     <div class="column is-11">
@@ -22,13 +26,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><router-link to="/pacienteDetalhes"><button class="button is-size-6">Detalhar</button></router-link></td>
+            <tr v-for="paciente in this.pacientes" :key="paciente.id">   
+                <td>{{paciente.nome}}</td>
+                <td>{{paciente.tipoAtendimento}}</td>
+                <td>{{paciente.numeroCartaoConvenio}}</td>
+                <td>{{paciente.dataVencimento}}</td>
+                <td>{{paciente.convenio}}</td>
+                <td>
+                <input type="button" class="button is-size-6 has-background-grey-light" 
+                  @click="onClickPaginaDetalhar(paciente.id)" value="Detalhar">
+              </td>
             </tr>
         </tbody>
       </table>
@@ -37,7 +44,36 @@
 </template>
 
 <script lang="ts">
-  import { Vue } from 'vue-class-component'; 
+   import { Vue } from 'vue-class-component'; 
+  import { PageRequest } from '@/model/page-request';
+  import { PageResponse } from '@/model/page.response';
+  import { Paciente } from '@/model/paciente.model';
+  import { PacienteClient } from '@/client/paciente.client';
+  export default class PacienteView extends Vue {
+     pageRequest: PageRequest = new PageRequest()
+     pageResponse: PageResponse<Paciente> = new PageResponse()
+     pacientes: Paciente[] = []
+     pacienteClient!: PacienteClient
 
-  export default class PacienteView extends Vue {}
+    public mounted():void {
+      this.pacienteClient = new PacienteClient()
+      this.listarPacientes()
+    }
+    private listarPacientes():void {
+      this.pacienteClient.findByFiltrosPaginado(this.pageRequest)
+        .then(
+          success => {
+            this.pageResponse = success
+            this.pacientes = this.pageResponse.content
+          },
+          error => console.log(error)
+        )
+    }
+    public onClickPaginaCadastrar():void {
+      this.$router.push({name: 'PacienteForm', params: { model: 'cadastrar'}})
+    }
+    public onClickPaginaDetalhar(id: number):void {
+      this.$router.push({name: 'PacientesForm', params: {id: id, model: 'detalhar'}})
+    }
+  }
 </script>
