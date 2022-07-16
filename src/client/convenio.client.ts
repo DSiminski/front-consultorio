@@ -57,7 +57,7 @@ public async getConveniosById(id: number): Promise<Convenio> {
 
   public async putConvenio(convenio: Convenio): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/${convenio.id}`, convenio)).data;
+      return (await this.axiosClient.put(`/status/${convenio.id}`, convenio)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -65,7 +65,7 @@ public async getConveniosById(id: number): Promise<Convenio> {
 
   public async desativarConvenios(convenio: Convenio): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/desativar/${convenio.id}`, convenio))
+      return (await this.axiosClient.put(`/disable/${convenio.id}`, convenio))
         .data;
     } catch (error: any) {
       return Promise.reject(error.response);

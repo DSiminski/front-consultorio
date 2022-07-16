@@ -128,12 +128,24 @@
                     </router-link>
                 </div>
             </div>
-            <div class="field">
-                <div class="control">
-                    <input class="button has-background-primary has-text-white is-uppercase btn" 
-                    type="button" value="Cadastrar" @click="postPaciente()">
-                </div>
+            <div class="field" v-if="this.model === 'cadastrar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Cadastrar"
+                    @click="onClickCadastrar()">
             </div>
+        </div>>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-danger has-text-white is-uppercase btn" type="button" value="Desativar"
+                    @click="onClickDesativar()">
+            </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Editar"
+                    @click="onClickEditar()">
+            </div>
+        </div>
         </div>
     </form>
 </template>
@@ -149,6 +161,8 @@
     import { Convenio } from '@/model/convenio.model';
     import { ConvenioClient } from '@/client/convenio.client';
     import { TipoAtendimento } from '@/model/tipo-atendimento.model'
+    import { Prop } from 'vue-property-decorator'
+
     
 export default class PacienteForm extends Vue {
     pageRequest: PageRequest = new PageRequest()
@@ -160,12 +174,29 @@ export default class PacienteForm extends Vue {
     convenioClient!: ConvenioClient
     convenioView: Convenio[] = []
     
+        @Prop({type: Number, required: false})
+        private readonly id!:number
+
+        @Prop({type: String, required: false})
+        private readonly model!:string
+
     public mounted(): void {
         this.pacienteClient = new PacienteClient()
         this.convenioClient = new ConvenioClient()
         this.getConvenios()
+        if(this.id){
+        this.getById(this.id)
+        }
     }
-    public postPaciente(): void {
+      private getById(id: number):void {
+            this.pacienteClient.getPacientesById(id)
+                .then(
+                    success => {
+                        this.paciente = success
+                    }
+                )
+        }
+    public onClickCadastrar(): void {
         this.pacienteClient.postPaciente(this.paciente).then(() => {
             this.notification = this.notification.new(true, 'notification is-success', 'Paciente cadastrado com sucesso!!')
             this.onClickLimpar();
@@ -185,6 +216,17 @@ export default class PacienteForm extends Vue {
                 error => console.log(error)
             )
     }
+     private onClickEditar():void {
+            this.pacienteClient.putPaciente(this.paciente)
+                .then(
+                    success => {
+                        this.$router.push('/pacienteView')
+                    }, error => {
+                        this.notification = this.notification.new(true,'notification is-danger','Error: ' + error)
+                        this.onClickLimpar()
+                    }
+                )
+        }
        
         // private onClickDesativar():void{
         //     this.pacienteClient.desativar(this.paciente).then((success: any)=>{

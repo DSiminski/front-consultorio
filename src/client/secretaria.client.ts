@@ -53,7 +53,7 @@ export class SecretariaClient {
 
   public async putSecretaria(secretaria: Secretaria): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/${secretaria.id}`, secretaria)).data;
+      return (await this.axiosClient.put(`/status/${secretaria.id}`, secretaria)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -62,7 +62,7 @@ export class SecretariaClient {
   public async desativarSecretarias(secretaria: Secretaria): Promise<void> {
     try {
       return (
-        await this.axiosClient.put(`/desativar/${secretaria.id}`, secretaria)
+        await this.axiosClient.put(`/disable/${secretaria.id}`, secretaria)
       ).data;
     } catch (error: any) {
       return Promise.reject(error.response);

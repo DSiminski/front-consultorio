@@ -65,7 +65,7 @@
     }
   
   public onClickPaginaDetalhar(idSecretaria: number){
-      this.$router.push({ name: 'secretaria-detalhar', params: { id: idSecretaria, model: 'detalhar' } })
+      this.$router.push({ name: 'SecretariaForm', params: { id: idSecretaria, model: 'detalhar' } })
     }
   }   
 </script>

@@ -31,7 +31,7 @@
                 <td>{{paciente.tipoAtendimento}}</td>
                 <td>{{paciente.numeroCartaoConvenio}}</td>
                 <td>{{paciente.dataVencimento}}</td>
-                <td>{{paciente.convenio}}</td>
+                <td><div v-if="paciente.convenio">{{paciente.convenio.nome}}</div></td>
                 <td>
                 <input type="button" class="button is-size-6 has-background-grey-light" 
                   @click="onClickPaginaDetalhar(paciente.id)" value="Detalhar">
@@ -73,7 +73,7 @@
       this.$router.push({name: 'PacienteForm', params: { model: 'cadastrar'}})
     }
     public onClickPaginaDetalhar(id: number):void {
-      this.$router.push({name: 'PacientesForm', params: {id: id, model: 'detalhar'}})
+      this.$router.push({name: 'PacienteForm', params: {id: id, model: 'detalhar'}})
     }
   }
 </script>

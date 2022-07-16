@@ -14,7 +14,7 @@ export class EspecialidadeClient {
     });
   }
 
-  public async findById(id: number): Promise<Especialidade> {
+  public async getEspecialidadesById(id: number): Promise<Especialidade> {
     try {
       return (await this.axiosClient.get<Especialidade>(`/${id}`)).data;
     } catch (error: any) {
@@ -54,7 +54,7 @@ export class EspecialidadeClient {
 
   public async putEspecialidade(especialidade: Especialidade): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/${especialidade.id}`, especialidade))
+      return (await this.axiosClient.put(`/status/${especialidade.id}`, especialidade))
         .data;
     } catch (error: any) {
       return Promise.reject(error.response);
@@ -62,12 +62,11 @@ export class EspecialidadeClient {
   }
 
   public async desativarEspecialidade(
-    especialidade: Especialidade
-  ): Promise<void> {
+    especialidade: Especialidade): Promise<void> {
     try {
       return (
         await this.axiosClient.put(
-          `/desativar/${especialidade.id}`,
+          `/disable/${especialidade.id}`,
           especialidade
         )
       ).data;

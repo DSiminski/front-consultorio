@@ -52,7 +52,7 @@
                                 <option value="">Selecione</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="feminino">Feminino</option>
-                                <option value="outros">Outros</option>
+                                <option value="outro">Outros</option>
                             </select>
                         </div>
                     </div>
@@ -112,12 +112,24 @@
                     </router-link>
                 </div>
             </div>
-            <div class="field">
-                <div class="control">
-                    <input class="button has-background-primary has-text-white is-uppercase btn" type="button"
-                        value="Cadastrar" @click="postSecretaria()">
-                </div>
+           <div class="field" v-if="this.model === 'cadastrar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Cadastrar"
+                    @click="onClickCadastrar()">
             </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-danger has-text-white is-uppercase btn" type="button" value="Desativar"
+                    @click="onClickDesativar()">
+            </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Editar"
+                    @click="onClickEditar()">
+            </div>
+        </div>
         </div>
     </form>
 </template>
@@ -129,6 +141,8 @@ import { Secretaria } from "@/model/secretaria.model"
 import { Vue } from "vue-class-component"
 import { SecretariaClient } from "@/client/secretaria.client"
 import { Notification } from "@/model/notification"
+import { Prop } from 'vue-property-decorator'
+
 
 export default class SecretariaForm extends Vue {
     pageRequest: PageRequest = new PageRequest()
@@ -137,10 +151,28 @@ export default class SecretariaForm extends Vue {
     secretarias: Secretaria = new Secretaria()
     notification: Notification = new Notification()
 
+        @Prop({type: Number, required: false})
+        private readonly id!:number
+
+        @Prop({type: String, required: false})
+        private readonly model!:string
+
     public mounted(): void {
         this.secretariaClient = new SecretariaClient()
+        if(this.id){
+        this.getById(this.id)
+        
+        }
     }
-    public postSecretaria(): void {
+     private getById(id: number):void {
+            this.secretariaClient.getSecretariasById(id)
+                .then(
+                    success => {
+                        this.secretarias = success
+                    }
+                )
+        }
+    public onClickCadastrar(): void {
         this.secretariaClient.postSecretaria(this.secretarias)
         
             .then(
@@ -154,6 +186,17 @@ export default class SecretariaForm extends Vue {
                 }
             )
     }
+    private onClickEditar():void {
+            this.secretariaClient.putSecretaria(this.secretarias)
+                .then(
+                    success => {
+                        this.$router.push('/secretariaView')
+                    }, error => {
+                        this.notification = this.notification.new(true,'notification is-danger','Error: ' + error)
+                        this.onClickLimpar()
+                    }
+                )
+        }
 
     public onClickFecharNotificacao(): void {
         this.notification = new Notification()

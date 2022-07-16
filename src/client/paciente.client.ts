@@ -66,7 +66,7 @@ throw new Error('Method not implemented.');
 
   public async putPaciente(paciente: Paciente): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/${paciente.id}`, paciente)).data;
+      return (await this.axiosClient.put(`/status/${paciente.id}`, paciente)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -74,7 +74,7 @@ throw new Error('Method not implemented.');
 
   public async desativarPacientes(paciente: Paciente): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/desativar/${paciente.id}`, paciente))
+      return (await this.axiosClient.put(`/status/disable/${paciente.id}`, paciente))
         .data;
     } catch (error: any) {
       return Promise.reject(error.response);

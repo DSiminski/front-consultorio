@@ -14,7 +14,6 @@
       <table class="table">
         <thead>
             <tr>
-              <th></th>
               <th>Nome</th>
               <th>Opções</th>
             </tr>
@@ -23,7 +22,7 @@
             <tr v-for="especialidade in this.especialidades" :key="especialidade.id">            
               <td>{{especialidade.nome}}</td>
               <td>
-                <input type="button" class="button is-size-6 has-background-grey-light" 
+                <input type="button" class="button is-size-6 has-background-gray-light" 
                   @click="onClickPaginaDetalhar(especialidade.id)" value="Detalhar">
               </td>
             </tr>
@@ -69,7 +68,7 @@
       this.$router.push({name: 'EspecialidadeForm', params: { model: 'cadastrar'}})
     }
     public onClickPaginaDetalhar(idEspecialidade: number){
-      this.$router.push({ name: 'especialidade-detalhar', params: { id: idEspecialidade, model: 'detalhar' } })
+      this.$router.push({ name: 'EspecialidadeForm', params: { id: idEspecialidade, model: 'detalhar' } })
     }
   }
 </script>

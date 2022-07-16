@@ -6,10 +6,8 @@
         <input class="input" type="text" placeholder="Pesquisar">
       </div>
       <div class="column is-3">
-        <td>
-          <router-link to="/medicoForm">
-           <input class="button has-background-primary" type="button" value="Cadastrar" @click="onClickPaginaCadastrar()">
-        </router-link>
+        <td>          
+           <input class="button has-background-primary" type="button" value="Cadastrar" @click="onClickPaginaCadastrar()">        
         </td>        
       </div>
     </div>
@@ -28,9 +26,8 @@
             <tr v-for="medico in this.medicos" :key="medico.id">            
               <td>{{medico.nome}}</td>
               <td>{{medico.crm}}</td>
-              <td>{{medico.especialidade}}</td>
-              <td>{{medico.valor}}</td>
-              <td>{{medico.opcoes}}</td>
+              <td>{{medico.especialidade.nome}}</td>
+              <td>{{medico.porcenParticipacao}}</td>            
               <td>
                 <input type="button" class="button is-size-6 has-background-grey-light" 
                   @click="onClickPaginaDetalhar(medico.id)" value="Detalhar">
@@ -66,9 +63,11 @@ export default class MedicoView extends Vue {
       this.medicos = this.pageResponse.content
     }).catch((error) => { console.log(error) })
   }
-
-    public onClickPaginaDetalhar(idMedico: number){
-      this.$router.push({ name: 'medico-detalhar', params: { id: idMedico, model: 'detalhar' } })
+   public onClickPaginaCadastrar():void {
+      this.$router.push({name: 'MedicoForm', params: { model: 'cadastrar'}})
+    }
+  public onClickPaginaDetalhar(idMedico: number){
+      this.$router.push({ name: 'MedicoForm', params: { id: idMedico, model: 'detalhar' } })
     }
 
 }

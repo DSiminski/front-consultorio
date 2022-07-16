@@ -12,16 +12,14 @@
         <div class="column is-10">
             <div class="field has-text-left">
                 <label class="checkbox">
-                    <input v-model="this.especialidade.ativo" class="checkbox" type="checkbox" checked  
-                        :disabled="this.model == 'detalhar' ? true : false">
+                    <input v-model="this.especialidade.ativo" class="checkbox" type="checkbox" checked>
                     Ativo
                 </label>
             </div>
             <div class="field">
                 <label class="label has-text-left">Nome</label>
                 <div class="control">
-                    <input class="input" v-model="this.especialidade.nome" type="text" placeholder="Insira um nome" 
-                        :disabled="this.model == 'detalhar' ? true : false">
+                    <input class="input" v-model="this.especialidade.nome" type="text" placeholder="Insira um nome">
                 </div>
             </div>
         </div>
@@ -29,21 +27,15 @@
     <div class="column is-10 is-flex is-justify-content-space-between p-5">
         <div class="field">
             <div class="control">
-                <router-link to="/especialidadeForm">
+                <router-link to="/especialidadeView">
                     <input type="button" class="button has-background-link has-text-white is-uppercase btn" value="Voltar" >
                 </router-link>
             </div>
         </div>
-        <div class="field" v-if="this.model === `cadastrar`">
+        <div class="field" v-if="this.model === 'cadastrar'">
             <div class="control">
                 <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Cadastrar"
                     @click="onClickCadastrar()">
-            </div>
-        </div>
-        <div class="field" v-if="this.model === 'detalhar'">
-            <div class="control">
-                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Editar" 
-                    @click="onClickPaginaDetalhar(this.id)">
             </div>
         </div>
         <div class="field" v-if="this.model === 'detalhar'">
@@ -52,7 +44,7 @@
                     @click="onClickDesativar()">
             </div>
         </div>
-        <div class="field" v-if="this.model === 'editar'">
+        <div class="field" v-if="this.model === 'detalhar'">
             <div class="control">
                 <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Editar"
                     @click="onClickEditar()">
@@ -77,10 +69,20 @@
          readonly id!: number
         @Prop({ type: String, default: false })
          readonly model!: string
+
         public mounted(): void {
             this.especialidadeClient = new EspecialidadeClient()
-            console.log(this.id)
-            console.log(this.model)
+            if(this.id){
+            this.getById(this.id)
+         }
+        }
+         private getById(id: number):void {
+            this.especialidadeClient.getEspecialidadesById(id)
+                .then(
+                    success => {
+                        this.especialidade = success
+                    }
+                )
         }
         
         public onClickCadastrar(): void {
@@ -95,6 +97,17 @@
                     this.onClickLimpar()
                 })
         }
+         private onClickEditar():void {
+            this.especialidadeClient.putEspecialidade(this.especialidade)
+                .then(
+                    success => {
+                        this.$router.push('/especialidadeView')
+                    }, error => {
+                        this.notification = this.notification.new(true,'notification is-danger','Error: ' + error)
+                        this.onClickLimpar()
+                    }
+                )
+        }
         public onClickFecharNotificacao(): void {
             this.notification = new Notification()
         }
@@ -102,6 +115,8 @@
             this.especialidade = new Especialidade()
         }
     }
+
+
         
 </script>
 

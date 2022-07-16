@@ -35,15 +35,22 @@
                         <input class="input" type="text" placeholder="Insira um telefone" v-model="medicos.telefone">
                     </div>
                 </div>
+                 <div class="field">
+                    <label class="label has-text-left">Celular</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Insira um celular"
+                            v-model="medicos.celular">
+                    </div>
+                </div>
                 <div class="field">
                     <label class="label has-text-left">Sexo</label>
                     <div class="control is-flex">
                         <div class="select"  > 
                             <select v-model="medicos.sexo">
                                 <option value="">Selecione</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feminino">Feminino</option>
-                                <option value="Outros">Outros</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outros">Outros</option>
                             </select>
                         </div>
                     </div>
@@ -92,7 +99,7 @@
                         <div class="select"> 
                             <select v-model="medicos.especialidade">
                                 <option value="">Selecione</option>
-                                <option value="Cardiologista">Cardiologista</option>
+                                <option v-for="especialidade in this.especialidadeList" :key="especialidade.id" :value="especialidade">{{especialidade.nome}}</option>
                             </select>
                         </div>
                     </div>
@@ -100,7 +107,13 @@
                 <div class="field">
                     <label class="label has-text-left">Porcentagem De Participação</label>
                     <div class="control">
-                        <input class="input" type="number" placeholder="Insira o valor da %" v-model="medicos.porcentagem">
+                        <input class="input" type="number" placeholder="Insira o valor da %" v-model="medicos.porcenParticipacao">
+                    </div>
+                </div>
+                  <div class="field">
+                    <label class="label has-text-left">Valor</label>
+                    <div class="control">
+                        <input class="input" type="number" placeholder="Insira o valor" v-model="medicos.valor">
                     </div>
                 </div>
             </div>
@@ -113,12 +126,24 @@
                     </router-link>
                 </div>
             </div>
-            <div class="field">
-                <div class="control">
-                    <input class="button has-background-primary has-text-white is-uppercase btn" type="submit" 
-                        value="Cadastrar" @click="postMedico()">
-                </div>
+            <div class="field" v-if="this.model === 'cadastrar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Cadastrar"
+                    @click="onClickCadastrar()">
             </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-danger has-text-white is-uppercase btn" type="button" value="Desativar"
+                    @click="onClickDesativar()">
+            </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Editar"
+                    @click="onClickEditar()">
+            </div>
+        </div>
         </div>
     </form>
 </template>
@@ -133,6 +158,8 @@
     import { EspecialidadeClient } from '@/client/especialidade.client';
     import { PageRequest } from '@/model/page-request'
     import { PageResponse } from '@/model/page.response'
+    import { Prop } from 'vue-property-decorator'
+
 
 export default class MedicoForm extends Vue {
     pageRequest: PageRequest = new PageRequest()
@@ -144,12 +171,29 @@ export default class MedicoForm extends Vue {
     especialidadeClient!: EspecialidadeClient
     especialidadeList: Especialidade[] = []
     
+        @Prop({type: Number, required: false})
+        private readonly id!:number
+
+        @Prop({type: String, required: false})
+        private readonly model!:string
+
     public mounted(): void {
         this.medicoClient = new MedicoClient()
         this.especialidadeClient = new EspecialidadeClient()
         this.getEspecialidade()
+        if(this.id){
+        this.getById(this.id)
+        }
     }
-    public postMedico(): void {
+    private getById(id: number):void {
+            this.medicoClient.getMedicosById(id)
+                .then(
+                    success => {
+                        this.medicos = success
+                    }
+                )
+        }
+    public onClickCadastrar(): void {
         this.medicoClient.postMedico(this.medicos)
            .then(
             (success: any)=>{
@@ -172,6 +216,17 @@ export default class MedicoForm extends Vue {
                 error => console.log(error)
             )
     }
+     private onClickEditar():void {
+            this.medicoClient.putMedico(this.medicos)
+                .then(
+                    success => {
+                        this.$router.push('/medicoView')
+                    }, error => {
+                        this.notification = this.notification.new(true,'notification is-danger','Error: ' + error)
+                        this.onClickLimpar()
+                    }
+                )
+        }
     public onClickFecharNotificacao(): void {
         this.notification = new Notification()
     }

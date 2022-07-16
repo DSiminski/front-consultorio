@@ -31,13 +31,25 @@
                     <router-link to="/convenioView">
                         <input class="button has-background-primary has-text-white is-uppercase btn" value="Voltar">
                     </router-link>
-                </div>
             </div>
-            <div class="field">
-                <div class="control">
-                    <input class="button has-background-primary has-text-white is-uppercase btn" type="submit"
-                        value="Cadastrar" @click="cadastrarConvenios()">
-                </div>
+        </div>
+        </div>
+        <div class="field" v-if="this.model === 'cadastrar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Cadastrar"
+                    @click="onClickCadastrar()">
+            </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-danger has-text-white is-uppercase btn" type="button" value="Desativar"
+                    @click="onClickDesativar()">
+            </div>
+        </div>
+        <div class="field" v-if="this.model === 'detalhar'">
+            <div class="control">
+                <input class="button has-background-primary has-text-white is-uppercase btn" type="button" value="Editar"
+                    @click="onClickEditar()">
             </div>
         </div>
     </form>
@@ -50,6 +62,8 @@ import { PageResponse } from '@/model/page.response'
 import { Convenio } from '@/model/convenio.model'
 import { ConvenioClient } from '@/client/convenio.client'
 import { Notification } from '@/model/notification';
+import { Prop } from 'vue-property-decorator'
+
 
 export default class ConvenioForm extends Vue {
     pageRequest: PageRequest = new PageRequest()
@@ -58,11 +72,30 @@ export default class ConvenioForm extends Vue {
     convenioClient!: ConvenioClient
     notification: Notification = new Notification()
 
+        @Prop({type: Number, required: false})
+        private readonly id!:number
+
+        @Prop({type: String, required: false})
+        private readonly model!:string
+
     public mounted(): void {
         this.convenioClient = new ConvenioClient()
-    
+        console.log(this.id);
+        if(this.id){
+        this.getById(this.id)
+        }
     }
-    cadastrarConvenios(): void {
+    private getById(id: number):void {
+            this.convenioClient.getConveniosById(id)
+                .then(
+                    success => {
+                       console.log(success);
+                        this.convenios = success
+                        console.log(this.convenios);
+                    }
+                )
+        }
+    public onClickCadastrar(): void {
         this.convenioClient.postConvenio(this.convenios)
             .then(
                 (success: any) => {
@@ -74,9 +107,26 @@ export default class ConvenioForm extends Vue {
                 }
             )
     }
+
+     public onClickEditar():void {
+            console.log(this.convenios);
+            this.convenioClient.putConvenio(this.convenios)
+                .then(
+                    success => {
+                        this.$router.push('/convenioView')
+                    }, error => {
+                        this.notification = this.notification.new(true,'notification is-danger','Error: ' + error)
+                        this.onClickLimpar()
+                    }
+                )
+        }
+    public onClickLimpar(): void {
+            this.convenios = new Convenio()
+        }
     public onClickFecharNotificacao(): void {
             this.notification = new Notification()
         }
+
 }
 </script>
 

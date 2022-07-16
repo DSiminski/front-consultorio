@@ -2,7 +2,7 @@ export enum StatusAgendamento{
     pendente = 'pendente',
     aprovado = 'aprovado',
     cancelado = 'cancelado',
-    compaeceu = 'compareceu',
+    compareceu = 'compareceu',
     ncompareceu = 'não Compareceu',
     rejeitado = 'rejeitado'
 }

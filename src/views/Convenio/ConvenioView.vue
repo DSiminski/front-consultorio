@@ -6,9 +6,7 @@
         <input class="input" type="text" placeholder="Pesquisar">
       </div>
       <div class="column is-3">
-        <router-link to="/convenioForm">
           <input class="button has-background-primary" type="button" value="Cadastrar" @click="onClickPaginaCadastrar()">
-      </router-link>
       </div>
     </div>
     
@@ -25,16 +23,12 @@
        
             <tr v-for="convenio in this.convenios" :key="convenio.id">            
               <td>{{convenio.nome}}</td>
+              <td>{{convenio.valor}}</td>
               <td>
                 <input type="button" class="button is-size-6 has-background-grey-light" 
                   @click="onClickPaginaDetalhar(convenio.id)" value="Detalhar">
-                  <tr>
-                  <td></td>
-                  <td></td>
-                  <td><router-link to="/convenioView"><button class="button is-size-6">Detalhar</button></router-link></td>
-            </tr>
-          </td>
-          </tr>
+              </td>          
+            </tr>         
         </tbody>
       </table>
     </div>
@@ -68,8 +62,11 @@ export default class ConvenioView extends Vue {
         (error: any) => console.log(error)
       )
   }
+   public onClickPaginaCadastrar():void {
+      this.$router.push({name: 'ConvenioForm', params: { model: 'cadastrar'}})
+    }
    public onClickPaginaDetalhar(idConvenio: number){
-      this.$router.push({ name: 'convenio-detalhar', params: { id: idConvenio, model: 'detalhar' } })
+      this.$router.push({ name: 'ConvenioForm', params: { id: idConvenio, model: 'detalhar' } })
     }
 }
 </script>

@@ -54,19 +54,10 @@ export class HistoricoClient {
 
   public async putHistorico(historico: Historico): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/${historico.id}`, historico)).data;
+      return (await this.axiosClient.put(`/status/${historico.id}`, historico)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
 
-  public async desativarHistorico(historico: Historico): Promise<void> {
-    try {
-      return (
-        await this.axiosClient.put(`/desativar/${historico.id}`, historico)
-      ).data;
-    } catch (error: any) {
-      return Promise.reject(error.response);
-    }
-  }
 }

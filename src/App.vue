@@ -35,11 +35,9 @@
         </router-view >
       </div>
     </div>
-  <Footer>
-      <div class="column is-fullhd footer">
-        <h1>Footer</h1>
-      </div>
-</Footer>
+  <div class="column is-12 footer">
+        <p class="footer-content">Made with <span id="heart-emoji">❤</span> by <a href="http://" target="_blank" rel="noopener noreferrer" id="link-profile">Dayane</a></p>
+  </div>
   </div>
 
 </template>
@@ -55,54 +53,60 @@
 
 #app {
 
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Palatino, URW Palladio L, serif;
+  font-size: 100%;
   text-align: center;
-  color: black;
-  height: 100vh;
-
+  color: gray;
 }
 .content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    height: 100vh; 
 }
-
 .header {
-  background-color: aqua;
-  max-height: 80px;
+  background-color: black;
   text-align: left;
 
   h1 {
-    color: black;
+    color: gray;
   }
 }
 
 .footer {
-  background-color: aqua;
-  text-align: center;
-  h1 {
-    color: black;
-  }
+    background-color: black;
+    max-height: 100px;
+    min-width: 100vw;
+    bottom: 0;
+    display: block;
 }
+
+.footer-content {
+    display: block;
+    text-align: center;
+    color: grey;
+    position:relative;
+    top: 50%;
+    transform: translateY(-100%);
+}
+
+#heart-emoji {
+    color: red;
+}
+
+#link-profile:link {
+    text-decoration: none;
+}
+
+#link-profile:hover {
+    text-decoration: underline;
+    color: white;
+}
+
 
 .menu {
   color: aqua;
-  background-color:palevioletred;
   text-align: left;
 }
 
-nav {
-  a {
-    font-weight: bold;
-    color: brown;
-
-    &.router-link-exact-active {
-      color: blueviolet;
-    }
-  }
-
-}
 </style>

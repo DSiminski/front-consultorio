@@ -54,7 +54,7 @@ export class MedicoClient {
 
   public async putMedico(medico: Medico): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/${medico.id}`, medico)).data;
+      return (await this.axiosClient.put(`/status/${medico.id}`, medico)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -62,7 +62,7 @@ export class MedicoClient {
 
   public async desativarMedicos(medico: Medico): Promise<void> {
     try {
-      return (await this.axiosClient.put(`/desativar/${medico.id}`, medico))
+      return (await this.axiosClient.put(`/disable/${medico.id}`, medico))
         .data;
     } catch (error: any) {
       return Promise.reject(error.response);

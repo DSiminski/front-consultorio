@@ -12,7 +12,7 @@ export class AgendamentoClient {
         headers: { "Content-type": "application/json" },
       });
     }
-    public async getAgendasById(id: number): Promise<Agendamento> {
+    public async getAgendamentoById(id: number): Promise<Agendamento> {
         try {
           return (await this.axiosClient.get<Agendamento>(`/${id}`)).data;
         } catch (error: any) {
@@ -20,7 +20,7 @@ export class AgendamentoClient {
         }
       }
     
-      public async getAgendas(
+      public async getAgendamento(
         pageRequest: PageRequest
       ): Promise<PageResponse<Agendamento>> {
         try {
@@ -42,7 +42,7 @@ export class AgendamentoClient {
         }
       }
     
-      public async postAgenda(agendamento: Agendamento): Promise<void> {
+      public async postAgendamento(agendamento: Agendamento): Promise<void> {
         try {
           return await this.axiosClient.post("/", agendamento);
         } catch (error: any) {
@@ -57,13 +57,70 @@ export class AgendamentoClient {
           return Promise.reject(error.response);
         }
       }
+      public async aprovar(agendamento: Agendamento): Promise<void> {
+        try {
+            return (await this.axiosClient.put(`/status/aprovado/${agendamento.id}`, agendamento)).data
+        } catch (error: any) {
+            return Promise.reject(error.response)
+        }
+    }
+
+    public async rejeitar(agendamento: Agendamento): Promise<void> {
+        try {
+            return (await this.axiosClient.put(`/status/rejeitado/${agendamento.id}`, agendamento)).data
+        } catch (error: any) {
+            return Promise.reject(error.response)
+        }
+    }
+
+    public async cancelar(agendamento: Agendamento): Promise<void> {
+        try {
+            return (await this.axiosClient.put(`/status/cancelado/${agendamento.id}`, agendamento)).data
+        } catch (error: any) {
+            return Promise.reject(error.response)
+        }
+    }
+
+    public async comparecido(agendamento: Agendamento): Promise<void> {
+        try {
+            return (await this.axiosClient.put(`/status/compareceu/${agendamento.id}`, agendamento)).data
+        } catch (error: any) {
+            return Promise.reject(error.response)
+        }
+    }
+
+    public async ncomparecido(agendamento: Agendamento): Promise<void> {
+        try {
+            return (await this.axiosClient.put(`/status/ncompareceu/${agendamento.id}`, agendamento)).data
+        } catch (error: any) {
+            return Promise.reject(error.response)
+        }
+    }
     
       public async desativarAgendas(agendamento: Agendamento): Promise<void> {
         try {
-          return (await this.axiosClient.put(`/desativar/${agendamento.id}`, agendamento))
+          return (await this.axiosClient.put(`/disable/${agendamento.id}`, agendamento))
             .data;
         } catch (error: any) {
           return Promise.reject(error.response);
         }
       }
+      public async listAllToday(pageRequest: PageRequest): Promise<PageResponse<Agendamento>> {
+        try {
+
+            let requestPath = ''
+            requestPath += `?page=${pageRequest.currentPage}`
+            requestPath += `&size=${pageRequest.pageSize}`
+            requestPath += `&sort=${pageRequest.sortField === undefined
+                    ? '' : pageRequest.sortField},${pageRequest.direction}`
+
+            return (await this.axiosClient.get<PageResponse<Agendamento>>('/today'+requestPath,
+                {
+                    params: { filtros: pageRequest.filter }
+                }
+            )).data
+        } catch (error: any) {
+            return Promise.reject(error.response)
+        }
+    }
 }
